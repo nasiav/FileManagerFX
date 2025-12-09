@@ -1,5 +1,8 @@
 package com.example.filemanager;
 
+import com.example.filemanager.model.User;
+import com.example.filemanager.services.UserService;
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -29,9 +32,11 @@ public class Main extends Application {
         // --- Fields ---
         TextField usernameField = new TextField();
         usernameField.setPromptText("Username");
+        usernameField.setMaxWidth(200);
 
         PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("Password");
+        passwordField.setMaxWidth(200);
 
         Label errorLabel = new Label();
         errorLabel.setStyle("-fx-text-fill: red;");
@@ -43,13 +48,14 @@ public class Main extends Application {
             String user = usernameField.getText();
             String pass = passwordField.getText();
 
-            if (user.equals("admin") && pass.equals("admin123")) {
-                System.out.println("Login OK!");
+            UserService userService = new UserService();
+            User u = userService.authenticate(user, pass);
 
-                // for now, just replace the scene with a blank one
-                stage.setScene(new Scene(new Label("Welcome!"), 400, 300));
-            } else {
+            if (u == null) {
                 errorLabel.setText("Invalid username or password!");
+            } else {
+                System.out.println("Login success! Role = " + u.getRole());
+                stage.setScene(new Scene(new Label("Welcome, " + u.getUsername() + "!"), 400, 300));
             }
         });
 
