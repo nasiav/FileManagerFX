@@ -4,12 +4,14 @@ import com.example.filemanager.model.User;
 import com.example.filemanager.services.UserService;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -54,8 +56,8 @@ public class Main extends Application {
             if (u == null) {
                 errorLabel.setText("Invalid username or password!");
             } else {
-                System.out.println("Login success! Role = " + u.getRole());
-                stage.setScene(new Scene(new Label("Welcome, " + u.getUsername() + "!"), 400, 300));
+                // Switch to post-login scene
+                stage.setScene(createPostLoginScene(stage, u.getUsername(), u.getRole()));
             }
         });
 
@@ -63,6 +65,27 @@ public class Main extends Application {
 
         return new Scene(layout, 300, 200);
     }
+    private Scene createPostLoginScene(Stage stage, String username, String role) {
+
+        BorderPane postLoginLayout = new BorderPane();
+        postLoginLayout.setPadding(new Insets(10));
+
+        // Center: Welcome message
+        Label welcomeLabel = new Label("Welcome, " + username + "! Your role is: " + role.toLowerCase() +".");
+        postLoginLayout.setCenter(welcomeLabel);
+
+        // Bottom-right: Logout button
+        Button logoutButton = new Button("Logout");
+        logoutButton.setOnAction(e -> {
+            stage.setScene(createLoginScene(stage)); // go back to login
+        });
+
+        BorderPane.setAlignment(logoutButton, Pos.BOTTOM_RIGHT);
+        postLoginLayout.setBottom(logoutButton);
+
+        return new Scene(postLoginLayout, 400, 300);
+    }
+
 
 
     public static void main(String[] args) {
