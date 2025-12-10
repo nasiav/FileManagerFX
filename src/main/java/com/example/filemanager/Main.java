@@ -4,14 +4,12 @@ import com.example.filemanager.model.User;
 import com.example.filemanager.services.UserService;
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -56,8 +54,8 @@ public class Main extends Application {
             if (u == null) {
                 errorLabel.setText("Invalid username or password!");
             } else {
-                // Switch to post-login scene
-                stage.setScene(createPostLoginScene(stage, u.getUsername(), u.getRole()));
+                // CHANGED CODE: stage.setScene(createPostLoginScene(stage, u.getUsername(), u.getRole()));
+                openDashboard(stage, u);
             }
         });
 
@@ -65,28 +63,35 @@ public class Main extends Application {
 
         return new Scene(layout, 300, 200);
     }
-    private Scene createPostLoginScene(Stage stage, String username, String role) {
+    //private Scene createPostLoginScene(Stage stage, String username, String role) {
 
-        BorderPane postLoginLayout = new BorderPane();
-        postLoginLayout.setPadding(new Insets(10));
+    //    BorderPane postLoginLayout = new BorderPane();
+    //    postLoginLayout.setPadding(new Insets(10));
 
         // Center: Welcome message
-        Label welcomeLabel = new Label("Welcome, " + username + "! Your role is: " + role.toLowerCase() +".");
-        postLoginLayout.setCenter(welcomeLabel);
+    //    Label welcomeLabel = new Label("Welcome, " + username + "! Your role is: " + role.toLowerCase() +".");
+    //    postLoginLayout.setCenter(welcomeLabel);
 
         // Bottom-right: Logout button
-        Button logoutButton = new Button("Logout");
-        logoutButton.setOnAction(e -> {
-            stage.setScene(createLoginScene(stage)); // go back to login
-        });
+    //    Button logoutButton = new Button("Logout");
+    //    logoutButton.setOnAction(e -> {
+    //        stage.setScene(createLoginScene(stage)); // go back to login
+    //    });
 
-        BorderPane.setAlignment(logoutButton, Pos.BOTTOM_RIGHT);
-        postLoginLayout.setBottom(logoutButton);
+    //    BorderPane.setAlignment(logoutButton, Pos.BOTTOM_RIGHT);
+    //    postLoginLayout.setBottom(logoutButton);
 
-        return new Scene(postLoginLayout, 400, 300);
+    //    return new Scene(postLoginLayout, 400, 300);
+    //}
+
+    private void openDashboard(Stage stage, User user) {
+        Dashboard dashboard = new Dashboard(user);
+        try {
+            dashboard.start(stage);  
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
-
 
     public static void main(String[] args) {
         launch();

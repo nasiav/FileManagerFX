@@ -1,12 +1,13 @@
 package com.example.filemanager.services;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.example.filemanager.model.User;
 
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
@@ -14,17 +15,34 @@ public class UserService {
     private List<User> users;
 
     public UserService() {
-        loadUsers();
+        users = loadUsers(); // make sure the users field is initialized
     }
 
-    private void loadUsers() {
-        try (Reader reader = new InputStreamReader(
-                getClass().getResourceAsStream("/data/users.json")
-        )) {
-            Type listType = new TypeToken<List<User>>(){}.getType();
-            users = new Gson().fromJson(reader, listType);
+    public List<User> loadUsers() {
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/users.json")) {
+
+            if (inputStream == null) {
+                throw new RuntimeException("users.json not found in resources/data!");
+            }
+
+            try (Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
+                Gson gson = new Gson();
+                User[] userArray = gson.fromJson(reader, User[].class);
+
+                List<User> userList = new ArrayList<>();
+                for (User u : userArray) {
+                    if (u.getAccessibleFiles() == null) {
+                        u.setAccessibleFiles(new ArrayList<>());
+                    }
+                    userList.add(u);
+                }
+
+                return userList;
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 

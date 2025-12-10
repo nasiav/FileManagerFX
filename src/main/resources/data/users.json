@@ -2,16 +2,22 @@
   {
     "username": "admin",
     "password": "admin123",
-    "role": "ADMIN"
+    "role": "ADMIN",
+    "accessibleFiles": []
+
   },
   {
     "username": "maria",
     "password": "mariapass",
-    "role": "AUTHOR"
+    "role": "AUTHOR",
+    "accessibleFiles": ["file1.txt", "file2.txt"]
+
   },
   {
     "username": "nikos",
     "password": "nikospass",
-    "role": "USER"
+    "role": "USER",
+    "accessibleFiles": ["file1.txt", "file2.txt"]
+
   }
 ]
