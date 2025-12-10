@@ -63,26 +63,6 @@ public class Main extends Application {
 
         return new Scene(layout, 300, 200);
     }
-    //private Scene createPostLoginScene(Stage stage, String username, String role) {
-
-    //    BorderPane postLoginLayout = new BorderPane();
-    //    postLoginLayout.setPadding(new Insets(10));
-
-        // Center: Welcome message
-    //    Label welcomeLabel = new Label("Welcome, " + username + "! Your role is: " + role.toLowerCase() +".");
-    //    postLoginLayout.setCenter(welcomeLabel);
-
-        // Bottom-right: Logout button
-    //    Button logoutButton = new Button("Logout");
-    //    logoutButton.setOnAction(e -> {
-    //        stage.setScene(createLoginScene(stage)); // go back to login
-    //    });
-
-    //    BorderPane.setAlignment(logoutButton, Pos.BOTTOM_RIGHT);
-    //    postLoginLayout.setBottom(logoutButton);
-
-    //    return new Scene(postLoginLayout, 400, 300);
-    //}
 
     private void openDashboard(Stage stage, User user) {
         Dashboard dashboard = new Dashboard(user);
