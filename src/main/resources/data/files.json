@@ -1,0 +1,24 @@
+[
+  {
+    "title": "Project Plan",
+    "author": "maria",
+    "creationDate": "2025-12-01",
+    "version": 1,
+    "category": "Planning",
+    "paragraphs": [
+      "Paragraph 1 content...",
+      "Paragraph 2 content..."
+    ]
+  },
+  {
+    "title": "Design Doc",
+    "author": "kostas",
+    "creationDate": "2025-12-05",
+    "version": 2,
+    "category": "Design",
+    "paragraphs": [
+      "Introduction...",
+      "Design details..."
+    ]
+  }
+]

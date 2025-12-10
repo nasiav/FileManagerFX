@@ -10,14 +10,14 @@
     "username": "maria",
     "password": "mariapass",
     "role": "AUTHOR",
-    "accessibleFiles": ["file1.txt", "file2.txt"]
+    "accessibleFiles": ["Project Plan", "Design Doc"]
 
   },
   {
     "username": "nikos",
     "password": "nikospass",
     "role": "USER",
-    "accessibleFiles": ["file1.txt", "file2.txt"]
+    "accessibleFiles": ["Project Plan", "Design Doc"]
 
   }
 ]
