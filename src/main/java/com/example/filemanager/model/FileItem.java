@@ -31,5 +31,7 @@ public class FileItem {
     // Setters
     public void setParagraphs(List<String> paragraphs) { this.paragraphs = paragraphs; }
     public void setVersion(int version) { this.version = version; }
+    public void setCategory(String category) { this.category = category; }
+
 }
 

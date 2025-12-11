@@ -11,6 +11,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.FileWriter;
+import java.io.Writer;
+import java.util.Optional;
+
+
 public class FileService {
     private List<FileItem> files;
 
@@ -41,5 +46,30 @@ public class FileService {
         }
         return result;
     }
+    public void saveFile(FileItem updatedFile) {
+        // Find index of the file with the same title
+        Optional<FileItem> existing = files.stream()
+                .filter(f -> f.getTitle().equals(updatedFile.getTitle()))
+                .findFirst();
+
+        if (existing.isPresent()) {
+            int index = files.indexOf(existing.get());
+            files.set(index, updatedFile); // replace with updated file
+        } else {
+            files.add(updatedFile); // optional: add if not existing
+        }
+
+        // Save back to JSON file
+        try (Writer writer = new FileWriter("src/main/resources/data/files.json")) { 
+            new Gson().toJson(files, writer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public List<FileItem> getFiles() {
+        return files;
+    }
+
+    
 }
 
