@@ -1,6 +1,7 @@
 package com.example.filemanager.services;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.example.filemanager.model.User;
 
 import java.io.InputStream;
@@ -26,7 +27,7 @@ public class UserService {
             }
 
             try (Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
-                Gson gson = new Gson();
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 User[] userArray = gson.fromJson(reader, User[].class);
 
                 List<User> userList = new ArrayList<>();

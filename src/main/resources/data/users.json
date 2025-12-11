@@ -3,14 +3,14 @@
     "username": "admin",
     "password": "admin123",
     "role": "ADMIN",
-    "accessibleFiles": []
+    "accessibleFiles": ["i am becoming an author now!"]
 
   },
   {
     "username": "maria",
     "password": "mariapass",
     "role": "AUTHOR",
-    "accessibleFiles": ["Project Plan", "Design Doc"]
+    "accessibleFiles": ["Project Plan", "Design Doc","hello world - intro to programming","how to basic"]
 
   },
   {

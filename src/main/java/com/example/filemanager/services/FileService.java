@@ -2,6 +2,7 @@ package com.example.filemanager.services;
 
 import com.example.filemanager.model.FileItem;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.InputStreamReader;
@@ -27,7 +28,7 @@ public class FileService {
         try (Reader reader = new InputStreamReader(
                 getClass().getClassLoader().getResourceAsStream("data/files.json"), StandardCharsets.UTF_8)) {
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             Type listType = new TypeToken<List<FileItem>>() {}.getType();
             files = gson.fromJson(reader, listType);
 
@@ -61,7 +62,8 @@ public class FileService {
 
         // Save back to JSON file
         try (Writer writer = new FileWriter("src/main/resources/data/files.json")) { 
-            new Gson().toJson(files, writer);
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();  // <--- pretty printing
+            gson.toJson(files, writer);
         } catch (Exception e) {
             e.printStackTrace();
         }

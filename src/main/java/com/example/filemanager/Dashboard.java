@@ -168,6 +168,10 @@ public class Dashboard {
                         category
                 );
                 fileService.saveFile(newFile);
+                
+                if (!user.getAccessibleFiles().contains(title)) {
+                    user.getAccessibleFiles().add(title);
+                }
             }
 
             // Refresh table
