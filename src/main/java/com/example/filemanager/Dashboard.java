@@ -3,6 +3,7 @@ package com.example.filemanager;
 import com.example.filemanager.model.User;
 import com.example.filemanager.model.FileItem;
 import com.example.filemanager.services.FileService;
+import com.example.filemanager.services.UserService;
 import com.example.filemanager.services.CategoryService;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
@@ -14,6 +15,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dashboard {
@@ -21,21 +23,68 @@ public class Dashboard {
     private User user;
     private FileService fileService;
     private CategoryService categoryService;
+    private UserService userService;
 
+    private void resetEditorFields(TextField titleField, ComboBox<String> categoryCombo, TextArea contentArea, Button saveButton) {
+        titleField.clear();
+        contentArea.clear();
+        if (!categoryCombo.getItems().isEmpty()) {
+            categoryCombo.getSelectionModel().selectFirst();
+        } else {
+            categoryCombo.getSelectionModel().clearSelection();
+        }
+        saveButton.setDisable(true);
+    }
+    
     public Dashboard(User user) {
         this.user = user;
         this.fileService = new FileService();
         this.categoryService = new CategoryService();
+        this.userService = new UserService();
     }
 
     public void start(Stage stage) {
 
+
+        // --- File updates! ---
+        List<String> updates = userService.getUpdatedFiles(user, fileService);
+
+        if (!updates.isEmpty()) {
+            String message = "Files have changed since your last login:\n" + String.join("\n", updates);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
+            alert.setTitle("File Updates");
+            alert.setHeaderText("Attention!");
+            alert.show();
+        }
+
+        // Optional: immediately update snapshot so notifications aren’t repeated
+        userService.snapshotVisibleFiles(user, fileService);
+
+        // Save to JSON
+        List<User> allUsers = userService.loadUsers();
+        for (int i = 0; i < allUsers.size(); i++) {
+            if (allUsers.get(i).getUsername().equals(user.getUsername())) {
+                allUsers.set(i, user);
+                break;
+            }
+        }
+        userService.saveUsers(allUsers);
+
         // --- Header ---
+        int totalCategories = categoryService.getCategories().size();
+        int totalFilesInSystem = fileService.getFiles().size();
+        int totalFilesForUser = user.getVisibleFiles(fileService).size();
+
         Label welcome = new Label("Welcome, " + user.getUsername());
         Label role = new Label("Role: " + user.getRole());
+        String categoriesText = String.join(", ", user.getAccessibleCategories());
+        Label categoriesLabel = new Label("Your assigned reading categories: " + categoriesText);
+        Label totalCategoriesLabel = new Label("Total categories in system: " + totalCategories);
+        Label totalFilesLabel = new Label("Total files in system: " + totalFilesInSystem);
+        Label userFilesLabel = new Label("Files assigned to you: " + totalFilesForUser);
 
         // --- TableView (left side) ---
-        List<FileItem> accessibleFiles = fileService.getFilesByTitles(user.getAccessibleFiles());
+        List<FileItem> accessibleFiles = user.getVisibleFiles(fileService);
         TableView<FileItem> table = new TableView<>(FXCollections.observableArrayList(accessibleFiles));
 
         TableColumn<FileItem, String> titleCol = new TableColumn<>("Title");
@@ -72,16 +121,24 @@ public class Dashboard {
         TextArea fileContentArea = new TextArea();
         fileContentArea.setWrapText(true);
 
+        //editorBox.setPadding(new Insets(10));
         Button saveButton = new Button("Save");
-        saveButton.setDisable(true); // initially disabled
+        saveButton.setDisable(true);
+
+        Button historyButton = new Button("Previous Versions");
+        historyButton.setDisable(true);
+
+        Button deleteButton = new Button("Delete");
+        deleteButton.setDisable(true);
+
+        HBox editorButtons = new HBox(10, saveButton, historyButton, deleteButton);
 
         VBox editorBox = new VBox(8,
                 fTitle, fileTitleField,
                 fCategory, categoryCombo,
                 new Label("Content:"), fileContentArea,
-                saveButton
+                editorButtons
         );
-        editorBox.setPadding(new Insets(10));
 
         // --- Buttons above table ---
         HBox tableButtons = new HBox(10);
@@ -106,13 +163,17 @@ public class Dashboard {
                 categoryCombo.getSelectionModel().select(selected.getCategory());
                 fileContentArea.setText(String.join("\n\n", selected.getParagraphs()));
 
-                // Enable editing only for admin or file author
-                boolean canEdit = user.getRole().equalsIgnoreCase("admin") ||
-                        selected.getAuthor().equals(user.getUsername());
+                boolean canEdit = user.getRole().equalsIgnoreCase("admin") || selected.getAuthor().equals(user.getUsername());
+
                 fileTitleField.setEditable(canEdit);
                 categoryCombo.setDisable(!canEdit);
-                fileContentArea.setEditable(canEdit);
+                fileContentArea.setEditable(!canEdit ? false : true);
                 saveButton.setDisable(!canEdit);
+                deleteButton.setDisable(!canEdit);
+
+                boolean hasHistory = selected.getPreviousContents() != null & !selected.getPreviousContents().isEmpty();
+
+                historyButton.setDisable(!(canEdit && hasHistory));
             }
         });
 
@@ -143,42 +204,98 @@ public class Dashboard {
             }
 
             FileItem selected = table.getSelectionModel().getSelectedItem();
-            boolean isAuthorOrAdmin = user.getRole().equalsIgnoreCase("admin") ||
-                    (selected != null && selected.getAuthor().equals(user.getUsername()));
+
+            boolean isAdmin = user.getRole().equalsIgnoreCase("admin");
+            boolean isAuthor = selected != null && selected.getAuthor().equals(user.getUsername());
+            boolean isAuthorOrAdmin = isAdmin || isAuthor;
 
             if (selected != null && isAuthorOrAdmin) {
-                // Edit existing file
+                // Edit existing file: increment version & store previous content
+                List<List<String>> previousContents = new ArrayList<>(selected.getPreviousContents() != null ? selected.getPreviousContents() : new ArrayList<>());
+                previousContents.add(selected.getParagraphs()); // add current content before editing
+                if (previousContents.size() > 2) previousContents.remove(0); // keep only last 2 versions
+
                 FileItem updatedFile = new FileItem(
                         title,
                         selected.getAuthor(),
                         selected.getCreationDate(),
                         selected.getVersion() + 1,
                         paragraphs,
-                        category
+                        category,
+                        previousContents
                 );
                 fileService.saveFile(updatedFile);
             } else if (selected == null) {
-                // New file
+                // New file: initialize empty previousContents
                 FileItem newFile = new FileItem(
                         title,
                         user.getUsername(),
                         LocalDate.now().toString(),
                         1,
                         paragraphs,
-                        category
+                        category,
+                        new ArrayList<>()
                 );
                 fileService.saveFile(newFile);
-                
-                if (!user.getAccessibleFiles().contains(title)) {
-                    user.getAccessibleFiles().add(title);
-                }
             }
 
-            // Refresh table
-            table.setItems(FXCollections.observableArrayList(fileService.getFilesByTitles(user.getAccessibleFiles())));
+            //refresh table and file preview
+            table.setItems(FXCollections.observableArrayList(user.getVisibleFiles(fileService)));
+            resetEditorFields(fileTitleField, categoryCombo, fileContentArea, saveButton);
             saveButton.setDisable(true);
         });
 
+        // -- Previous versions button action --
+        historyButton.setOnAction(e -> {
+            FileItem selected = table.getSelectionModel().getSelectedItem();
+
+            if (selected == null) {
+                new Alert(Alert.AlertType.WARNING, "Select a file first.").show();
+                return;
+            }
+
+            boolean canEdit = user.getRole().equalsIgnoreCase("admin") ||
+                    user.getUsername().equals(selected.getAuthor());
+
+            if (!canEdit) {
+                new Alert(Alert.AlertType.ERROR, "You don't have permission to view previous versions.").show();
+                return;
+            }
+
+            List<List<String>> previous = selected.getPreviousContents();
+
+            if (previous == null || previous.isEmpty()) {
+                new Alert(Alert.AlertType.INFORMATION, "No previous versions available.").show();
+                return;
+            }
+
+            StringBuilder sb = new StringBuilder("Previous versions:\n\n");
+
+            for (int i = 0; i < previous.size(); i++) {
+                sb.append("Version -").append(i + 1).append(":\n");
+                sb.append(String.join("\n\n", previous.get(i)));
+                sb.append("\n-----------------------------\n");
+            }
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Previous Versions");
+            alert.setHeaderText("Last 2 versions of this file");
+            alert.setContentText(sb.toString());
+            alert.getDialogPane().setPrefWidth(500);
+            alert.show();
+        });
+
+        //-- Delete File button --
+        deleteButton.setOnAction(e -> {
+            FileItem selected = table.getSelectionModel().getSelectedItem();
+            if (selected != null && (user.getRole().equalsIgnoreCase("admin") ||
+                                    selected.getAuthor().equals(user.getUsername()))) {
+                fileService.deleteFile(selected);
+                //refresh table and file preview
+                table.setItems(FXCollections.observableArrayList(user.getVisibleFiles(fileService)));
+                resetEditorFields(fileTitleField, categoryCombo, fileContentArea, saveButton);
+            }
+        });
         // --- Edit Categories button action ---
         editCategoriesButton.setOnAction(e -> {
             EditCategories editor = new EditCategories(categoryService);
@@ -191,7 +308,20 @@ public class Dashboard {
 
         // --- Logout button ---
         Button logoutButton = new Button("Logout");
+
         logoutButton.setOnAction(e -> {
+            userService.snapshotVisibleFiles(user, fileService);
+            //List<User> allUsers = userService.loadUsers();
+
+            for (int i = 0; i < allUsers.size(); i++) {
+                if (allUsers.get(i).getUsername().equals(user.getUsername())) {
+                    allUsers.set(i, user); 
+                    break;
+                }
+            }
+
+            userService.saveUsers(allUsers);
+
             Main mainApp = new Main();
             try {
                 mainApp.start(stage);
@@ -202,7 +332,18 @@ public class Dashboard {
 
         // --- Layout ---
         BorderPane root = new BorderPane();
-        VBox topContent = new VBox(10, welcome, role, new Label("Your files:"), tableButtons, splitPane);
+        VBox topContent = new VBox(
+                10,
+                welcome,
+                role,
+                categoriesLabel,
+                totalCategoriesLabel,
+                totalFilesLabel,
+                userFilesLabel,
+                new Label("Your files:"),
+                tableButtons,
+                splitPane
+        );
         topContent.setPadding(new Insets(10));
 
         root.setCenter(topContent);
@@ -212,5 +353,7 @@ public class Dashboard {
 
         stage.setScene(new Scene(root, 1000, 500));
         stage.show();
+
+
     }
 }

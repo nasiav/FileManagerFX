@@ -1,170 +1,207 @@
 [
   {
-    "title": "Project Plan",
-    "author": "maria",
-    "creationDate": "2025-12-01",
-    "version": 4,
-    "paragraphs": [
-      "Project plan bla bla",
-      "In addition, project plan bla bla",
-      "changes in the file (again #2)"
-    ],
-    "category": "Planning"
-  },
-  {
-    "title": "Design Doc",
-    "author": "kostas",
-    "creationDate": "2025-12-05",
+    "title": "Nothing works anymore, yay",
+    "author": "admin",
+    "creationDate": "2026-03-01",
     "version": 2,
     "paragraphs": [
-      "Introduction...",
-      "Design details..."
+      "And nothing hurts anymore, i feel kinda freeeeeeeee"
     ],
-    "category": "Design"
+    "category": "Science",
+    "previousContents": [
+      [
+        "Help"
+      ]
+    ]
   },
   {
-    "title": "title",
-    "author": "admin",
-    "creationDate": "2025-12-11",
+    "title": "new file by maria",
+    "author": "maria",
+    "creationDate": "2026-03-01",
     "version": 1,
     "paragraphs": [
-      "contnet"
+      ""
     ],
-    "category": "newcategory lol"
+    "category": "Planning",
+    "previousContents": []
   },
   {
-    "title": "HOW TO MAKE ATOMS",
-    "author": "admin",
-    "creationDate": "2025-12-11",
+    "title": "How to move to canada",
+    "author": "medialab",
+    "creationDate": "2026-03-01",
+    "version": 2,
+    "paragraphs": [
+      "Step 1: get in an airplane",
+      "Step 2: immigrate"
+    ],
+    "category": "Planning",
+    "previousContents": [
+      [
+        "Step 1: get in an airplane"
+      ]
+    ]
+  },
+  {
+    "title": "How to scam your landlord",
+    "author": "medialab",
+    "creationDate": "2026-03-01",
     "version": 1,
     "paragraphs": [
-      "IDK, DO YOU?"
+      "Invite 10 friends to live over with you, split the rent"
     ],
-    "category": "Science"
-  },
-  {
-    "title": "i am becoming an author now!",
-    "author": "admin",
-    "creationDate": "2025-12-11",
-    "version": 2,
-    "paragraphs": [
-      "please help",
-      "i changed the category!"
-    ],
-    "category": "Science"
-  },
-  {
-    "title": "hello world - intro to programming",
-    "author": "maria",
-    "creationDate": "2025-12-11",
-    "version": 2,
-    "paragraphs": [
-      "hello world :)",
-      "I\u0027m making the first change!"
-    ],
-    "category": "Science"
+    "category": "Science",
+    "previousContents": []
   },
   {
     "title": "how to basic",
-    "author": "maria",
-    "creationDate": "2025-12-11",
+    "author": "medialab",
+    "creationDate": "2026-03-01",
     "version": 3,
     "paragraphs": [
-      "the youtube channel",
-      "change2"
+      "buy eggs",
+      "buy camera",
+      "break eggs on things",
+      "\n*profit immensely*"
     ],
-    "category": "Literature"
+    "category": "Planning",
+    "previousContents": [
+      [
+        "buy eggs",
+        "buy camera",
+        "break eggs on things",
+        "\n*profit lots*"
+      ],
+      [
+        "buy eggs",
+        "buy camera",
+        "break eggs on things",
+        "\n*profit*"
+      ]
+    ]
   },
   {
-    "title": "newfile!",
-    "author": "maria",
-    "creationDate": "2025-12-11",
+    "title": "How to write the most depressing poem",
+    "author": "medialab",
+    "creationDate": "2026-03-01",
     "version": 3,
     "paragraphs": [
-      "i am such a prolific author! and i make changes! and some are stored!"
+      "1. Be Dostoyevski\n2. Die\n3. Be remembered for being depressing"
     ],
-    "category": "Literature"
+    "category": "Literature",
+    "previousContents": [
+      [
+        "1. Be Dostoyevski\n2. Die"
+      ],
+      [
+        "1. Be Dostoyevski"
+      ]
+    ]
   },
   {
-    "title": "newfileiguess",
-    "author": "maria",
-    "creationDate": "2025-12-11",
-    "version": 1,
+    "title": "The Rap scene in Ancient Rome",
+    "author": "nikita",
+    "creationDate": "2026-03-01",
+    "version": 2,
     "paragraphs": [
-      "herewegoagain"
+      "--"
     ],
-    "category": "Planning"
+    "category": "Music",
+    "previousContents": [
+      [
+        "-"
+      ]
+    ]
   },
   {
-    "title": "author\u0027s attempt",
-    "author": "maria",
-    "creationDate": "2025-12-11",
+    "title": "is erich maria remarque erich or maria deep analysis",
+    "author": "nikita",
+    "creationDate": "2026-03-01",
     "version": 1,
     "paragraphs": [
-      "can this file get assigned to me?"
+      "online search and library examination inconclusive, and because of the death of the author concept we cannot ask either of them"
     ],
-    "category": "Planning"
+    "category": "Literature",
+    "previousContents": []
   },
   {
-    "title": "another attempt",
-    "author": "maria",
-    "creationDate": "2025-12-11",
-    "version": 1,
+    "title": "I am a scientist",
+    "author": "katea",
+    "creationDate": "2026-03-01",
+    "version": 2,
     "paragraphs": [
-      "yay"
+      "Water freezes at 32F.."
     ],
-    "category": "Planning"
+    "category": "Science",
+    "previousContents": [
+      [
+        "Water freezes at 32F."
+      ]
+    ]
   },
   {
-    "title": "new file alerttt",
-    "author": "admin",
-    "creationDate": "2025-12-11",
+    "title": "Intelligent design over engineering",
+    "author": "katea",
+    "creationDate": "2026-03-01",
     "version": 1,
     "paragraphs": [
-      "idk man"
+      "God debunked"
     ],
-    "category": "Planning"
+    "category": "Design",
+    "previousContents": []
   },
   {
-    "title": "new attempt (i am tired",
-    "author": "maria",
-    "creationDate": "2025-12-11",
+    "title": "I rap better than Eminem",
+    "author": "katea",
+    "creationDate": "2026-03-01",
     "version": 1,
     "paragraphs": [
-      "i am tired"
+      "I once had a dream about it. You should have seen it."
     ],
-    "category": "Science"
+    "category": "Music",
+    "previousContents": []
   },
   {
-    "title": "filesfilesflies",
-    "author": "maria",
-    "creationDate": "2025-12-11",
-    "version": 1,
+    "title": "Is Taylor Swift overrated?",
+    "author": "katea",
+    "creationDate": "2026-03-01",
+    "version": 3,
     "paragraphs": [
-      "contentcnotetn"
+      "Most people would say yes. Kanye said he made her famous. [citation needed]. It is also said that the inventor of zero intvented it accidentally when trying to rate her albums.[citation also needed].",
+      "Ultimately it\u0027s up to the reader."
     ],
-    "category": "Design"
+    "category": "Music",
+    "previousContents": [
+      [
+        "Most people would say yes. Kanye said he made her famous. [citation needed]. It is also said that the inventor of zero intvented it accidentally when trying to rate her albums.[citation also needed].",
+        "Ultimately it\u0027s up to the reader."
+      ],
+      [
+        "Most people would say yes. Kanye said he made her famous. [citation needed]",
+        "Ultimately it\u0027s up to the reader."
+      ]
+    ]
   },
   {
-    "title": "newfile???",
-    "author": "admin",
-    "creationDate": "2025-12-11",
-    "version": 1,
+    "title": "Lady Gaga entering design scene",
+    "author": "nikita",
+    "creationDate": "2026-03-01",
+    "version": 4,
     "paragraphs": [
-      "newfile!"
+      "Look at Gaga for example, she\u0027s the creative director of Polaroid. ",
+      "\nI like some of the Gaga songs.",
+      "\nBut what does she know about cameras??"
     ],
-    "category": "Planning"
-  },
-  {
-    "title": "new file - trying paragraphs",
-    "author": "maria",
-    "creationDate": "2025-12-11",
-    "version": 1,
-    "paragraphs": [
-      "paragraph1",
-      "paragraph2",
-      "paragraph3"
-    ],
-    "category": "Literature"
+    "category": "Design",
+    "previousContents": [
+      [
+        "Look at Gaga for example, she\u0027s the creative director of Polaroid. But what does she know about cameras??",
+        "",
+        "I like some of the Gaga songs."
+      ],
+      [
+        "Look at Gaga for example, she\u0027s the creative director of Polaroid. But what does she know about cameras??",
+        "I like some of the Gaga songs."
+      ]
+    ]
   }
 ]

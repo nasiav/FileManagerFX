@@ -2,22 +2,119 @@
   {
     "username": "admin",
     "password": "admin123",
-    "role": "ADMIN",
-    "accessibleFiles": ["i am becoming an author now!"]
-
+    "role": "admin",
+    "accessibleCategories": [],
+    "lastSeenFileVersions": {
+      "is erich maria remarque erich or maria deep analysis": 1,
+      "how to basic": 3,
+      "How to scam your landlord": 1,
+      "How to move to canada": 2,
+      "The Rap scene in Ancient Rome": 2,
+      "new file by maria": 1,
+      "Lady Gaga entering design scene": 4,
+      "I rap better than Eminem": 1,
+      "Is Taylor Swift overrated?": 3,
+      "Intelligent design over engineering": 1,
+      "Nothing works anymore, yay": 2,
+      "How to write the most depressing poem": 3,
+      "I am a scientist": 2
+    }
+  },
+  {
+    "username": "medialab",
+    "password": "medialab_2025",
+    "role": "admin",
+    "accessibleCategories": [],
+    "lastSeenFileVersions": {
+      "is erich maria remarque erich or maria deep analysis": 1,
+      "new file by maria": 1,
+      "how to basic": 3,
+      "How to scam your landlord": 1,
+      "Nothing works anymore, yay": 2,
+      "How to move to canada": 2,
+      "How to write the most depressing poem": 2,
+      "The Rap scene in Ancient Rome": 2,
+      "this one\u0027s for nikos": 1
+    }
+  },
+  {
+    "username": "nikita",
+    "password": "nikitapass",
+    "role": "admin",
+    "accessibleCategories": [],
+    "lastSeenFileVersions": {
+      "is erich maria remarque erich or maria deep analysis": 1,
+      "how to basic": 3,
+      "How to scam your landlord": 1,
+      "How to move to canada": 2,
+      "The Rap scene in Ancient Rome": 2,
+      "new file by maria": 1,
+      "Lady Gaga entering design scene": 4,
+      "I rap better than Eminem": 1,
+      "Is Taylor Swift overrated?": 3,
+      "Intelligent design over engineering": 1,
+      "Nothing works anymore, yay": 2,
+      "How to write the most depressing poem": 3,
+      "I am a scientist": 2
+    }
   },
   {
     "username": "maria",
     "password": "mariapass",
-    "role": "AUTHOR",
-    "accessibleFiles": ["Project Plan", "Design Doc","hello world - intro to programming","how to basic"]
-
+    "role": "author",
+    "accessibleCategories": [
+      "Design",
+      "Science"
+    ],
+    "lastSeenFileVersions": {
+      "new file by maria": 1,
+      "How to scam your landlord": 1,
+      "Nothing works anymore, yay": 1,
+      "this one\u0027s for nikos": 1
+    }
+  },
+  {
+    "username": "katea",
+    "password": "kateapass",
+    "role": "author",
+    "accessibleCategories": [
+      "Planning",
+      "Design"
+    ],
+    "lastSeenFileVersions": {
+      "new file by maria": 1,
+      "I rap better than Eminem": 1,
+      "Is Taylor Swift overrated?": 3,
+      "Intelligent design over engineering": 1,
+      "how to basic": 3,
+      "How to move to canada": 2,
+      "I am a scientist": 2
+    }
   },
   {
     "username": "nikos",
     "password": "nikospass",
-    "role": "USER",
-    "accessibleFiles": ["Project Plan", "Design Doc"]
-
+    "role": "user",
+    "accessibleCategories": [
+      "Science",
+      "Literature"
+    ],
+    "lastSeenFileVersions": {
+      "Nothing works anymore, yay": 1,
+      "this one\u0027s for nikos": 1
+    }
+  },
+  {
+    "username": "nikos",
+    "password": "nikospass",
+    "role": "user",
+    "accessibleCategories": [
+      "Science",
+      "Literature"
+    ],
+    "lastSeenFileVersions": {
+      "Nothing works anymore, yay": 1,
+      "this one\u0027s for nikos": 1
+    }
   }
 ]
